@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <div class="login-wrap" style="margin-top: 40px;">
+        <div class="login-html">
+            
+            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+            <div class="login-form" style="margin-top: 15px;">
+                <div class="sign-in-htm">
+                    <div class="group">
+                        <label for="user" class="label">Username</label>
+                        <input id="user1" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="pass1" type="password" class="input" data-type="password">
+                    </div>
+
+                    <div id="signIn" class="group">
+                        <input type="button" class="button signIn" value="Sign In">
+                    </div>
+                    <p style="color:red;"id="feedback"></p>
+                    <div class="hr"></div>
+                    <a href="index.html"><button style="border-radius: 10px; padding:3px 7px; color:white; margin-top: 0px; background-color: #1161ee; border: none;" class="btn btn-sm btn-primary">Home Page</button></a>
+                </div>
+                <div class="sign-up-htm">
+                    <div class="group">
+                        <label for="user" class="label">Name</label>
+                        <input id="name" type="text" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Surname</label>
+                        <input id="surname" type="text" class="input" data-type="text">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Username</label>
+                        <input id="username" type="text" class="input" data-type="text">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Password</label>
+                        <input id="password" type="password" class="input">
+                    </div>
+                    <div class="group">
+                        <label for="pass" class="label">Address</label>
+                        <input id="address" type="email" class="input">
+                    </div>
+                    <div class="group" id="signUp">
+                        <input type="button" class="button" value="Sign Up">
+                    </div>
+                    <div class="hr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        $("#signUp").on('click', function(){
+            console.log("usao");
+            var first_name=document.getElementById("name").value;
+            var last_name=document.getElementById("surname").value;
+            var username=document.getElementById("username").value;
+            var password=document.getElementById("password").value;
+            var address=document.getElementById("address").value;
+            $.ajax({
+              url:'so/register.php',
+              type:'POST',
+              data:{first_name:first_name, last_name:last_name, username:username, password:password, address:address},
+              success:function(){
+                window.location.replace("http://localhost/namestaj/index.html");              }
+            });
+          });  
+          $("#signIn").on('click', function(){
+            console.log("usao");
+            var username=document.getElementById("user1").value;
+            var password=document.getElementById("pass1").value;
+            $.ajax({
+              url:'so/login.php',
+              type:'POST',
+              data:{username:username, password:password},
+              success:function(tekst){
+                  console.log(tekst);
+                  if(tekst=="Wrong username or password"){
+                    $('#feedback').html(tekst);
+                  }else{
+                window.location.replace("http://localhost/namestaj/user.php");              }
+                  }
+            });
+          });  
+    });
+</script>
